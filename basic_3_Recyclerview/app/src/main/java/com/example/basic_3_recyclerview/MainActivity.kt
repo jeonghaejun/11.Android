@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onItemClick(pos: Int){
-//        val data = items[pos]
+        val data = items[pos]
 //        toast(data.toString())
 
         // 무슨일을 할까?

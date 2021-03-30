@@ -27,8 +27,9 @@ class Notification (val context: Context) {
         }
     }
 
-    fun getPendingIntent(
-            cls: Class<AppCompatActivity>,
+    fun <T: AppCompatActivity>getPendingIntent(
+//            cls: Class<AppCompatActivity>,
+            cls: Class<T>,
             requestCode:Int,
             flag: Int = PendingIntent.FLAG_UPDATE_CURRENT):PendingIntent{
 

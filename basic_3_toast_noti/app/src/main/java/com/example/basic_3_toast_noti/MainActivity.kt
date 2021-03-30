@@ -36,8 +36,8 @@ class MainActivity : AppCompatActivity() {
             noti.createNotificationChannel(CHANNEL_ID, CHANNEL_NAME, CHANNEL_DESCRIPTION)
             val pendingIntent = noti.getPendingIntent(
                     // 눌럿을때 나오는 창바꾸기
-//                    DetectionActivity::class.java, NOTIFICATION_REQUEST)
-            this.javaClass, NOTIFICATION_REQUEST)
+                DetectionActivity::class.java, NOTIFICATION_REQUEST)
+//            this.javaClass, NOTIFICATION_REQUEST)
             noti.notifyBasic(CHANNEL_ID, NOTIFICATION_ID,
                             "Alarm","침입 발생",
                             R.drawable.ic_launcher_foreground,pendingIntent)

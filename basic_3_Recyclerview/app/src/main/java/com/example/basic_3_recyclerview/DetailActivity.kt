@@ -14,3 +14,7 @@ class DetailActivity : AppCompatActivity() {
         Log.d(TAG,data.toString())
     }
 }
+
+// 목록 --> 아이템 선택 --> 상세보기
+// 뒤로가기 --> 목록 --> 아이템 선택 --> 상세보기
+// 좌우 슬라이딩
