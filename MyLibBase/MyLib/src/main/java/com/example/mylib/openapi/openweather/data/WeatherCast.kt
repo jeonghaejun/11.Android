@@ -1,6 +1,6 @@
 package com.example.mylib.openapi.openweather.data
 
-data class Weather(
+data class WeatherCast(
     val base: String,
     val clouds: Clouds,
     val cod: Int,
@@ -12,6 +12,6 @@ data class Weather(
     val sys: Sys,
     val timezone: Int,
     val visibility: Int,
-    val weather: List<WeatherX>,
+    val weather: List<Weather>,
     val wind: Wind
 )

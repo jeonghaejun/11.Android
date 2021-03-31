@@ -1,7 +1,10 @@
-package com.example.imagesearch
+package com.example.mylib.openapi.kakao.image
 
+import android.util.Log
 import com.example.mylib.openapi.kakao.image.data.ImageSearchResult
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -29,5 +32,29 @@ object KakaoImageSerach{
         .build()
 
     fun getService(): KakaoImageSearchService =
-                    retrofit.create(KakaoImageSearchService::class.java)
+                    retrofit.create(
+                        KakaoImageSearchService::class.java)
+
+    fun searchImage(keyword: String,page:Int,callback: (ImageSearchResult)->Unit) {
+        getService()
+            .requestSearchImage(keyword=keyword,page=page)
+            .enqueue(object : Callback<ImageSearchResult> {
+                override fun onFailure(call: Call<ImageSearchResult>, t: Throwable) {
+                    Log.e("----",t.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<ImageSearchResult>,
+                    response: Response<ImageSearchResult>
+                ) {
+                    if (response.isSuccessful){
+                        val result = response.body()   // body()의 리턴 타입 ImageSearchResult?
+                        callback(result!!)
+                    } else {
+                        Log.w("MainActivity","${response.code()},${response.message()}")
+                        Log.w("MainActivity","${response.toString()}")
+                    }
+                }
+            })
+    }
 }

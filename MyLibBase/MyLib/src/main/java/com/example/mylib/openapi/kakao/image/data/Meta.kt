@@ -1,4 +1,4 @@
-package com.example.imagesearch.data.kakaoimage
+package com.example.mylib.openapi.kakao.image.data
 
 data class Meta(
     val is_end: Boolean,       // 현재 페이지가 마지막 페이지인지 여부
