@@ -2,6 +2,8 @@ package com.example.mylib.openapi.openweather
 
 
 import android.util.Log
+import com.example.mylib.openapi.openweather.data.Weather
+import com.example.mylib.openapi.piapi.OpenApi
 import com.example.mylib.openapi.openweather.data.WeatherCast
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,36 +24,48 @@ interface OpenWeatherService {
     ): Call<WeatherCast>
 }
 
-object OpenWeather{
-    val TAG = javaClass.simpleName
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("http://api.openweathermap.org")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+object OpenWeather : OpenApi(){
+    override val TAG = javaClass.simpleName
+    override val BASE_URL = "http://api.openweathermap.org"
 
-    fun getService(): OpenWeatherService = retrofit.create(
-            OpenWeatherService::class.java)
+    private val service = retrofit.create(OpenWeatherService::class.java)
 
-    fun getWeatherCast(city:String,callback: (WeatherCast)->Unit) {
-        getService()
-            .qetWeatherCast(city)
-            .enqueue(object : Callback<WeatherCast> {
-                override fun onFailure(call: Call<WeatherCast>, t: Throwable) {
-                    Log.e(TAG,t.toString())
-                }
-
-                override fun onResponse(
-                    call: Call<WeatherCast>,
-                    response: Response<WeatherCast>
-                ) {
-                    if (response.isSuccessful){
-                        val result = response.body()   // body()의 리턴 타입 ImageSearchResult?
-                        callback(result!!)
-                    } else {
-                        Log.w(TAG,"${response.code()},${response.message()}")
-                        Log.w(TAG,"${response.toString()}")
-                    }
-                }
-            })
+    fun getWeatherCast(city: String,callback:(WeatherCast)->Unit){
+        service.qetWeatherCast(city)
+                .enqueue(ApiCallback<WeatherCast>(callback))
     }
 }
+
+//object OpenWeather{
+//    val TAG = javaClass.simpleName
+//    private val retrofit = Retrofit.Builder()
+//        .baseUrl("http://api.openweathermap.org")
+//        .addConverterFactory(GsonConverterFactory.create())
+//        .build()
+//
+//    fun getService(): OpenWeatherService = retrofit.create(
+//            OpenWeatherService::class.java)
+//
+//    fun getWeatherCast(city:String,callback: (WeatherCast)->Unit) {
+//        getService()
+//            .qetWeatherCast(city)
+//            .enqueue(object : Callback<WeatherCast> {
+//                override fun onFailure(call: Call<WeatherCast>, t: Throwable) {
+//                    Log.e(TAG,t.toString())
+//                }
+//
+//                override fun onResponse(
+//                    call: Call<WeatherCast>,
+//                    response: Response<WeatherCast>
+//                ) {
+//                    if (response.isSuccessful){
+//                        val result = response.body()   // body()의 리턴 타입 ImageSearchResult?
+//                        callback(result!!)
+//                    } else {
+//                        Log.w(TAG,"${response.code()},${response.message()}")
+//                        Log.w(TAG,"${response.toString()}")
+//                    }
+//                }
+//            })
+//    }
+//}
