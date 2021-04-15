@@ -19,11 +19,6 @@ interface PiApiService {
             @Query("value") value:Int
     ): Call<WeatherCast>
 
-    @GET("/api/pir")
-    fun controlPir(
-        @Query("target") target:String,
-        @Query("value") value:Int
-    ): Call<WeatherCast>
 }
 
 object PiApi : OpenApi(){
@@ -40,10 +35,6 @@ object PiApi : OpenApi(){
     fun controlServo(target: String,value: Int,callback:(WeatherCast)->Unit){
         service.controlServo(target,value)
                 .enqueue(ApiCallback<WeatherCast>(callback))
-    }
-    fun controlPir(target: String,value: Int,callback:(WeatherCast)->Unit){
-        service.controlPir(target,value)
-            .enqueue(ApiCallback<WeatherCast>(callback))
     }
 }
 

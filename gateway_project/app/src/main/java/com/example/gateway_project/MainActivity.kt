@@ -11,9 +11,8 @@ import com.example.mylib.net.Mqtt
 import com.example.mylib.openapi.piapi.PiApi
 import kotlinx.android.synthetic.main.activity_main.*
 import org.eclipse.paho.client.mqttv3.MqttMessage
-import java.net.URI
 
-const val SUB_TOPIC = "iot/control/pir"
+const val SUB_TOPIC = "iot/#"
 const val PUB_TOPIC = "iot/led"
 const val SERVER_URI = "tcp://192.168.0.4:1883"
 
@@ -64,12 +63,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        seekAngle.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+        seekAngle2.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 mqttClient.publish("iot/control/servo",progress.toString())
                 PiApi.controlServo("1",progress){
                     if(it.result == "OK"){
-                        txtServo.text = "서보 모터 : ${progress}°"
+                        txtServo2.text = "서보 모터 : ${progress}°"
                     }
                 }
             }
@@ -81,12 +80,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onReceived(topic: String, message: MqttMessage) {
-        // 토픽 수신 처리
+
         val msg = String(message.payload)
         Log.i(TAG,"$topic : $msg")
 
-        //어느 스레드가 onReceived를 실행하는가 확인..
-        // MqttService에서 runOnUIThread()로 호출
         txtWeatherInfo.text="$topic : $msg"
         if(msg=="on"){PIR_img.imageTintList = ColorStateList.valueOf(Color.RED)
 
@@ -94,14 +91,13 @@ class MainActivity : AppCompatActivity() {
             noti.createNotificationChannel(CHANNEL_ID, CHANNEL_NAME, CHANNEL_DESCRIPTION)
             val pendingIntent = noti.getPendingIntent(
                     // 눌럿을때 나오는 창바꾸기
-                    , NOTIFICATION_REQUEST)
+                     DetectionActivity::class.java, NOTIFICATION_REQUEST)
 //            this.javaClass, NOTIFICATION_REQUEST)
             noti.notifyBasic(CHANNEL_ID, NOTIFICATION_ID,
                     "Alarm","침입 발생",
                     R.drawable.ic_launcher_foreground,pendingIntent)
         }
         else{PIR_img.imageTintList = ColorStateList.valueOf(Color.DKGRAY)}
-
     }
     fun publish() {
         mqttClient.publish(PUB_TOPIC, "1")

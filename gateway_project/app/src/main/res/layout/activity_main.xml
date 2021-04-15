@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/txtServo" />
+        app:layout_constraintStart_toEndOf="@+id/txtServo2" />
 
     <ImageView
         android:id="@+id/imgLight"
@@ -36,7 +36,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekAngle"
+        app:layout_constraintTop_toBottomOf="@+id/seekAngle2"
         app:srcCompat="@drawable/ic_baseline_highlight_24" />
 
     <Switch
@@ -47,10 +47,10 @@
         android:layout_marginTop="32dp"
         android:text="LED1"
         app:layout_constraintStart_toEndOf="@+id/imgLight"
-        app:layout_constraintTop_toBottomOf="@+id/seekAngle" />
+        app:layout_constraintTop_toBottomOf="@+id/seekAngle2" />
 
     <TextView
-        android:id="@+id/txtServo"
+        android:id="@+id/txtServo2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <SeekBar
-        android:id="@+id/seekAngle"
+        android:id="@+id/seekAngle2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -71,7 +71,7 @@
         android:progress="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtServo" />
+        app:layout_constraintTop_toBottomOf="@+id/txtServo2" />
 
     <TextView
         android:id="@+id/textView3"
